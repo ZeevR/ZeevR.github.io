@@ -1,0 +1,332 @@
+jQuery(document).ready(function($){
+
+
+			/* mobile menu */
+
+			jQuery('.menu-trigger, .hamburger').off();
+			jQuery('.menu-trigger, .hamburger').on('click', function () {
+				jQuery('body').addClass('active');
+				jQuery('.menu-box').addClass('active');
+				jQuery(this).addClass('change is-active');
+			});
+			jQuery('.body-overlay').on('click', function () {
+				jQuery('body').removeClass('active');
+				jQuery('.menu-box').removeClass('active');
+				jQuery('.menu-trigger, .hamburger').removeClass('change is-active');
+			});
+
+
+
+
+/* login */
+
+
+	
+	
+	$('.nav-account.logged-in').click(function(e) {
+	$('.sub-nav-account').toggle();
+	e.stopPropagation();
+});
+$(document).click(function() {
+	$('.sub-nav-account').hide();
+});
+$('.sub-nav-account').click(function(e) {
+	e.stopPropagation();
+});
+$('.account-close').click(function() {
+	$('body,html').css('overflow', 'auto');
+	$('.account-popup').css('display', 'none');
+	$('.login-box').show();
+	$('.register-box').hide();
+});
+$('.account-cover').click(function(e) {
+	e.stopPropagation();
+});
+
+$('.new-login').click(function() {
+	$('body,html').css('overflow', 'hidden');
+	$('.account-popup').css('display', 'block');
+	//$('.custom_redirect').val('https://amitpalsingh.com/');
+});
+$('.account-popup').click(function() {
+	$('body,html').css('overflow', 'auto');
+	$('.account-popup').css('display', 'none');
+	//$('.custom_redirect').val('https://amitpalsingh.com/');
+});
+$('.account-cover').click(function(e) {
+	e.stopPropagation();
+});
+$('.post-ad-large.new-login').click(function() {
+	$('.account-popup').css('display', 'block');
+	//$('.custom_redirect').val('https://amitpalsingh.com/post-listing');
+});
+$('.show-register-box').click(function() {
+	$('.login-box').hide();
+	$('.register-box').show();
+	$('.otp-box').hide();
+	//$('.custom_redirect').val('https://amitpalsingh.com/post-listing');
+});
+$('.show-login-box').click(function() {
+	$('.login-box').show();
+	$('.register-box').hide();
+	$('.otp-box').hide();
+	//$('.custom_redirect').val('https://amitpalsingh.com/');
+});
+$('.show-otp-box').click(function() {
+	$('.otp-box').show();
+	$('.login-box').hide();
+	$('.register-box').hide();
+	//$('.custom_redirect').val('https://amitpalsingh.com/');
+});
+
+/*
+// Get the input field
+var loginpassword = document.getElementById("login_password");
+// Execute a function when the user releases a key on the keyboard
+loginpassword.addEventListener("keyup", function(event) {
+	// Number 13 is the "Enter" key on the keyboard
+	if(event.keyCode === 13) {
+		// Cancel the default action, if needed
+		event.preventDefault();
+		// Trigger the button element with a click
+		document.getElementById("submit_button").click();
+	}
+});
+*/
+
+
+
+
+$('.get_otp_button').click(function(e) {
+	e.preventDefault();
+	
+	if(($('#otp_phone').val() == "") || ($('#otp_phone').val() == null)){
+		$('#otp_phone').focus();
+		return false;
+	}
+	
+	//alert($("#enter_otp").val().length);
+	if(($('#enter_otp').val() == "") || ($("#enter_otp").val().length < 5) || ($("#enter_otp").val().length > 5)){
+		$('#enter_otp').focus();
+		$('.otp-warning').html('Please enter 5 digit OTP');
+		return false;
+	}
+	
+	var loader = $(".loader-cover");
+	loader.addClass('visible');
+	
+	var fullnumber = $("#otp_phone").intlTelInput("getNumber");
+	var countrycode = $("#otp_phone").intlTelInput("getSelectedCountryData");
+	var onlynumber = fullnumber.replace('+'+countrycode.dialCode,'');
+	
+	var data = {
+		'action': 'login_with_otp',
+		'otp': $('#enter_otp').val(),
+		'fullnumber': fullnumber,
+		'onlynumber': onlynumber,
+		crossDomain: true,
+		cache: false,
+	}
+	
+	$.post(myajax.ajaxurl, data, function(response) {
+		console.log(response);
+		loader.removeClass('visible');
+		
+		var splitted = response.split(",");
+		if(splitted[0] == "loginsuccess") {
+			$('.otp-box p.status').css('color', 'green');
+			$('.otp-box p.status').html('Login Successful! Redirecting....');
+			//if($('.custom_redirect').val() == 'https://amitpalsingh.com/') {
+				location.reload();
+			//} else {
+				//window.location.href = $('.custom_redirect').val();
+			//}
+		} else {
+			$('.otp-box p.status').html(response);
+			loader.removeClass('visible');
+		}
+		
+	});
+	
+	
+	
+	
+});
+
+
+$('.submit_button').click(function(e) {
+	e.preventDefault();
+	
+	var loader = $(".loader-cover");
+	loader.addClass('visible');
+	var username = $('.login-box #login_username').val();
+	var password = $('.login-box #login_password').val();
+	if(username == "") {
+		$('.login-box #login_username').focus();
+		loader.removeClass('visible');
+		return false;
+	}
+	if(password == "") {
+		$('.login-box #login_password').focus();
+		loader.removeClass('visible');
+		return false;
+	}
+	var data = {
+		'action': 'ajax_login',
+		'username': username,
+		'password': password,
+		crossDomain: true,
+		cache: false,
+	}
+	
+	
+	
+	var loader = $(".loader-cover");
+	loader.addClass('visible');
+	var username = $('.login-box #login_username').val();
+	var password = $('.login-box #login_password').val();
+	if(username == "") {
+		$('.login-box #login_username').focus();
+		loader.removeClass('visible');
+		return false;
+	}
+	if(password == "") {
+		$('.login-box #login_password').focus();
+		loader.removeClass('visible');
+		return false;
+	}
+	
+	var data = {
+		'action': 'ajax_login',
+		'username': username,
+		'password': password,
+		crossDomain: true,
+		cache: false,
+	}
+	
+	$.post(myajax.ajaxurl, data, function(response) {
+		var splitted = response.split(",");
+		if(splitted[0] == "loginsuccess") {
+			$('.login-box p.status').css('color', 'green');
+			$('.login-box p.status').html('Login Successful! Redirecting....');
+			//if($('.custom_redirect').val() == 'https://amitpalsingh.com/') {
+				//location.reload();
+			//} else {
+				window.location.href = $('.custom_redirect').val();
+			//}
+		} else {
+			$('.login-box p.status').html(response);
+			loader.removeClass('visible');
+		}
+	});
+	
+}); /* hit the login button */
+	
+function validateCell($phone) {
+	var phoneReg = /^[0-9]{7,10}$/;
+	return phoneReg.test($phone);
+}
+$('.signup_button').click(function(e) {
+	e.preventDefault();
+	var loader = $(".loader-cover");
+	loader.addClass('visible');
+	var fullname = $('.register-box #register_fullname').val();
+	var username = $('.register-box #register_username').val();
+	var password = $('.register-box #register_password').val();
+	//var phone = $('.register-box #register_phone').val();
+	//var countrycode = $('.register-box #countrycode').val();
+	if(fullname == "") {
+		$('.register-box #register_fullname').focus();
+		loader.removeClass('visible');
+		return false;
+	}
+	if(username == "") {
+		$('.register-box #register_username').focus();
+		loader.removeClass('visible');
+		return false;
+	}
+	if(password == "") {
+		$('.register-box #register_password').focus();
+		loader.removeClass('visible');
+		return false;
+	}
+	/*if(!validateCell(phone)) {
+		$('.register-box #register_phone').focus();
+		loader.removeClass('visible');
+		return false;
+	}*/
+var fullnumber = $("#register_phone").intlTelInput("getNumber");
+var countrycode = $("#register_phone").intlTelInput("getSelectedCountryData");
+var error = $("#register_phone").intlTelInput("getValidationError");
+var isValid = $("#register_phone").intlTelInput("isValidNumber");
+var onlynumber = fullnumber.replace('+'+countrycode.dialCode,'');
+
+var dialcode = countrycode.dialCode;
+
+var validationError = {
+  "Unknown": 0,
+  "Invalid country calling code": 1,
+  "The string supplied is too short to be a phone number": 2,
+  "The string supplied is too long to be a phone number": 3,
+  "The string supplied did not seem to be a phone number": 4,
+  "INVALID_LENGTH": 5,
+};
+
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
+//alert(getKeyByValue(validationError, error));
+if(isValid == false){
+	$('.phone-warning').html('Invalid phone number');
+	loader.removeClass('visible');
+	return false;
+}
+
+	var data = {
+		'action': 'regitser_with_phone',
+		'fullname': fullname,
+		'username': username,
+		'password': password,
+		'countrycode': dialcode,
+		'phone': onlynumber,
+		crossDomain: true,
+		cache: false,
+	}
+
+
+
+
+
+	
+	$.post(myajax.ajaxurl, data, function(response) {
+		$('.register-box p.status').html(response);
+		var splitted = response.split(",");
+		loader.removeClass('visible');
+		if(splitted[0] == "loginsuccess") {
+			$('.register-box p.status').css('color', 'green');
+			$('.register-box p.status').html('Registration Successful! Redirecting');
+			
+			
+			window.location.href = $('.custom_redirect').val();
+		}
+	});
+	
+});
+$('#password, #username, #register_fullname, #register_username, #register_password, #register_phone, #otp_phone, #enter_otp').click(function() {
+	$('p.status').html('');
+	$('.phone-warning').html('');
+	$('.otp-warning').html('');
+});
+	  
+
+
+
+
+
+$(".g-login").click(function(){
+	$('.g_id_signin,#g_id_onload')[0].click();
+});
+
+
+});

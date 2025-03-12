@@ -1,0 +1,167 @@
+/*
+Theme Name: Hello Elementor Child
+Theme URI: https://elementor.com/hello-theme/?utm_source=wp-themes&utm_campaign=theme-uri&utm_medium=wp-dash
+Template: hello-elementor
+Author: Elementor Team
+Author URI: https://elementor.com/?utm_source=wp-themes&utm_campaign=author-uri&utm_medium=wp-dash
+Description: A lightweight and minimalist WordPress theme for Elementor page builder.
+Tags: accessibility-ready,flexible-header,custom-colors,custom-menu,custom-logo,featured-images,rtl-language-support,threaded-comments,translation-ready
+Version: 2.8.1.1697003956
+Updated: 2023-10-11 05:59:16
+
+*/
+
+
+
+
+/* button animation css */
+.btnbb:hover .btn-text,.btnbb:hover .btn-arrow {
+	border-color:var(--e-global-color-secondary) !important;
+	color:var(--e-global-color-secondary) !important;
+	stroke:var(--e-global-color-secondary) !important;
+}
+.btnbb:hover .btn-arrow path {
+	stroke:var(--e-global-color-secondary) !important;
+}
+a.btn-cover {
+    display: inline-block;
+}
+.btn-text {
+    background: var(--e-global-color-secondary);
+    float: left;
+	border:1px solid var(--e-global-color-secondary);
+	box-sizing:border-box;
+    color: #fff;
+  	width: auto;
+    padding: 0 20px;
+	text-align:center;
+	height:49px;
+	line-height:49px;
+    border-radius: 49px;
+	font-family: "poppins" ;
+	font-size:16px;
+	font-weight:400;
+}
+.btn-arrow {
+    background: var(--e-global-color-secondary);
+    float: right;
+	height:49px;
+	border:1px solid var(--e-global-color-secondary);
+	box-sizing:border-box;
+	width:49px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+    border-radius: 49px;
+}
+
+/**BTN WHITE**/
+
+.btnwhite .btn-text{
+	background-color: #fff!important;
+    border-color: #fff!important;
+    color: #000000 !important;
+	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+}
+.btnwhite .btn-arrow {
+	background-color: #fff!important;
+    border-color: #fff!important;
+	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+}
+.btnwhite .btn-arrow path {
+	stroke:#000000 !important;
+	
+}
+
+.btnwhite:hover .btn-text,.btnwhite:hover .btn-arrow {
+	background-color: var(--e-global-color-secondary) !important;
+	border-color: var(--e-global-color-secondary) !important;
+	color:#ffffff !important;
+}
+.btnwhite:hover .btn-arrow path {
+	stroke:#ffffff!important;
+}
+
+/**BTN WHITE END**/
+
+/**BTN GREEN**/
+
+.btngreen .btn-text{
+	background-color: #41A9B7!important;
+    border-color: #41A9B7!important;
+    color: #ffffff!important;
+	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+}
+.btngreen .btn-arrow {
+	background-color: #41A9B7!important;
+    border-color: #41A9B7!important;
+	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+}
+.btngreen .btn-arrow path {
+	stroke:#ffffff!important;
+	
+}
+
+.btngreen:hover .btn-text,.btngreen:hover .btn-arrow {
+	background-color: #ffffff!important;
+	border-color:#41A9B7!important;
+	color:#41A9B7!important;
+}
+.btngreen:hover .btn-arrow path {
+	stroke:#41A9B7!important;
+}
+
+/**BTN GREEN END**/
+
+
+.full-mega-menu{
+	position:fixed!important;
+	top:0px;
+	left:0px;
+	right:0px;bottom:0px;
+	display:none;
+	z-index:3;
+}
+.hamburg,.menu-close{
+	cursor:pointer;
+}
+
+.woocommerce-error, .woocommerce-info, .woocommerce-message {
+padding: 12px 20px 12px 35px;
+    margin: 0 0 2em;
+    position: relative;
+    background-color: #3FCA90;
+    color: #fff;
+    border-top: 3px solid #7f54b3;
+    list-style: none outside;
+    width: auto;
+    word-wrap: break-word;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    margin: 10px auto;
+    line-height: 20px;
+}
+
+.woocommerce .woocommerce-error .button, .woocommerce .woocommerce-info .button, .woocommerce .woocommerce-message .button, .woocommerce-page .woocommerce-error .button, .woocommerce-page .woocommerce-info .button, .woocommerce-page .woocommerce-message .button {
+    float: right;
+    padding: 0px;
+    background: none;
+    text-decoration: underline;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.woocommerce-error::before, .woocommerce-info::before, .woocommerce-message::before {
+    top: 13px;
+    left: 15px;
+}
+
+.woocommerce-page .woocommerce-message .button
+{
+	color:#fff;
+}
+
+.woocommerce-message::before {
+    color: #fff;
+}
