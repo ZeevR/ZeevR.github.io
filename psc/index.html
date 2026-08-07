@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fffaf2">
+<link rel="icon" href="data:,">
+<title>PSC 第一、二部分手机练习</title>
+<style>
+:root{--ink:#29251f;--paper:#fffaf2;--card:#fff;--line:#dfd4c3;--accent:#a8442b;--soft:#f4e9d8;--good:#2f6b55}
+*{box-sizing:border-box} html,body{max-width:100%;overflow-x:hidden} body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+main{width:100%;max-width:760px;min-width:0;margin:auto;padding:18px 14px 120px}.eyebrow{font-size:12px;letter-spacing:.12em;color:#776c60;font-weight:700}.title{font-size:25px;line-height:1.25;margin:5px 0 8px}.sub{font-size:14px;color:#6e655a;line-height:1.55;margin:0 0 14px}.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;position:sticky;top:0;z-index:5;background:rgba(255,250,242,.95);padding:8px 0;backdrop-filter:blur(8px)}
+button{min-width:0;font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:11px 8px;font-weight:650;cursor:pointer}.tabs button.active{background:var(--ink);color:white;border-color:var(--ink)}
+.panel{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:12px;margin:8px 0 10px}.timer{font-variant-numeric:tabular-nums;font-size:31px;font-weight:800;letter-spacing:.03em}.timer.danger{color:var(--accent)}.meta{font-size:12px;color:#6f655a;line-height:1.45}.controls{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}.controls button.primary{background:var(--accent);border-color:var(--accent);color:white}.controls button.on{background:var(--good);border-color:var(--good);color:white}
+.note{font-size:12px;line-height:1.5;color:#6f655a;margin:8px 2px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.card{position:relative;min-height:68px;padding:8px 3px 5px;border:1px solid var(--line);border-radius:12px;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none}.card .n{position:absolute;top:4px;left:6px;font-size:9px;color:#a89d91}.card .han{font-family:"Songti SC","STSong",serif;font-size:27px;line-height:1.15}.card.word .han{font-size:21px}.card.word.long .han{font-size:17px;white-space:nowrap}.card .py{height:15px;font-size:11px;color:var(--accent);margin-top:4px;opacity:0;white-space:nowrap}.show-pinyin .card .py{opacity:1}.card.marked{background:#fff0e9;border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}.card.marked:after{content:"重点";position:absolute;right:5px;top:4px;color:var(--accent);font-size:9px;font-weight:700}.card.speaking{outline:3px solid #e8bd55}.summary{margin-top:12px;border-top:1px solid var(--line);padding-top:12px;font-size:13px;line-height:1.55}.hidden{display:none!important}.badge{display:inline-block;background:#efe2cd;border-radius:999px;padding:3px 8px;margin:2px 3px 2px 0;font-size:11px}.footerbar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,250,242,.96);border-top:1px solid var(--line);padding:9px max(14px,env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom));z-index:8}.footerinner{max-width:760px;margin:auto;display:flex;gap:8px}.footerinner button{flex:1}.footerinner .marked-count{display:flex;align-items:center;justify-content:center;min-width:86px;font-size:12px;color:#6f655a}
+@media(min-width:560px){.grid{grid-template-columns:repeat(10,1fr)}.card{min-height:66px}.controls{grid-template-columns:repeat(4,1fr)}}
+@media(prefers-reduced-motion:no-preference){.card{transition:.12s transform,.12s background}.card:active{transform:scale(.97)}}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">普通话水平测试 · 手机训练</div>
+  <h1 class="title">第一、二部分专项练习</h1>
+  <p class="sub">按你提供的大纲制作：第一项100个单音节（3分30秒）；第二项100个音节（2分30秒）。每套自动换题，可离线使用。词语是按题型自编的训练材料，不是官方真题。</p>
+
+  <div class="tabs">
+    <button id="tab1" class="active" type="button">一、单音节</button>
+    <button id="tab2" type="button">二、多音节</button>
+  </div>
+
+  <section class="panel">
+    <div><div id="timer" class="timer">03:30</div><div id="timerState" class="meta">准备好后开始；按横向顺序朗读</div></div>
+    <div id="sectionMeta" class="meta">100个音节<br>满分10分</div>
+  </section>
+
+  <div class="controls">
+    <button id="timerBtn" class="primary" type="button">开始计时</button>
+    <button id="resetBtn" type="button">重置计时</button>
+    <button id="pinyinBtn" type="button">显示拼音</button>
+    <button id="listenBtn" type="button">听读模式：关</button>
+  </div>
+  <p id="instruction" class="note">直接点词语可标记“不稳”；打开听读模式后，点词语可听示范音。示范音使用手机内置普通话语音，仅作复核。</p>
+
+  <div id="grid" class="grid" aria-live="polite"></div>
+  <div id="summary" class="summary"></div>
+</main>
+
+<div class="footerbar">
+  <div class="footerinner">
+    <button id="newBtn" type="button">换一套题</button>
+    <button id="clearBtn" type="button">清除标记</button>
+    <div id="markedCount" class="marked-count">重点 0 项</div>
+  </div>
+</div>
+
+<script>
+const part1 = `八|bā,白|bái,百|bǎi,报|bào,冰|bīng,别|bié,北|běi,病|bìng,坡|pō,平|píng,跑|pǎo,票|piào,拍|pāi,盆|pén,品|pǐn,碰|pèng,妈|mā,门|mén,马|mǎ,木|mù,猫|māo,棉|mián,米|mǐ,梦|mèng,风|fēng,佛|fó,法|fǎ,饭|fàn,方|fāng,房|fáng,粉|fěn,凤|fèng,灯|dēng,答|dá,胆|dǎn,大|dà,东|dōng,读|dú,岛|dǎo,电|diàn,天|tiān,田|tián,土|tǔ,特|tè,听|tīng,甜|tián,铁|tiě,跳|tiào,妞|niū,年|nián,鸟|niǎo,内|nèi,南|nán,暖|nuǎn,脑|nǎo,嫩|nèn,拉|lā,来|lái,老|lǎo,路|lù,刘|liú,林|lín,柳|liǔ,六|liù,哥|gē,国|guó,狗|gǒu,盖|gài,光|guāng,格|gé,广|guǎng,逛|guàng,科|kē,葵|kuí,口|kǒu,看|kàn,开|kāi,狂|kuáng,苦|kǔ,困|kùn,花|huā,河|hé,好|hǎo,汉|hàn,黑|hēi,红|hóng,火|huǒ,换|huàn,家|jiā,急|jí,九|jiǔ,见|jiàn,江|jiāng,节|jié,酒|jiǔ,近|jìn,青|qīng,球|qiú,请|qǐng,去|qù,圈|quān,全|quán,犬|quǎn,劝|quàn,星|xīng,学|xué,小|xiǎo,信|xìn,先|xiān,熊|xióng,雪|xuě,笑|xiào,中|zhōng,竹|zhú,纸|zhǐ,站|zhàn,抓|zhuā,床|chuáng,丑|chǒu,唱|chàng,春|chūn,船|chuán,水|shuǐ,树|shù,山|shān,谁|shéi,人|rén,软|ruǎn,日|rì,扔|rēng,容|róng,染|rǎn,让|ràng,资|zī,足|zú,早|zǎo,最|zuì,村|cūn,词|cí,草|cǎo,错|cuò,三|sān,俗|sú,扫|sǎo,四|sì,衣|yī,鱼|yú,雨|yǔ,月|yuè,烟|yān,云|yún,眼|yǎn,院|yuàn,乌|wū,文|wén,五|wǔ,外|wài,弯|wān,王|wáng,晚|wǎn,问|wèn`.split(',').map(x=>{const [text,pinyin]=x.split('|');return{text,pinyin,syllables:1}});
+
+const groups = {
+  thirdThird: `水果|shuǐ guǒ,美好|měi hǎo,领导|lǐng dǎo,展览|zhǎn lǎn,保管|bǎo guǎn,勇敢|yǒng gǎn,手表|shǒu biǎo,本领|běn lǐng,海水|hǎi shuǐ,语法|yǔ fǎ,导演|dǎo yǎn,古典|gǔ diǎn`.split(','),
+  thirdOther: `火车|huǒ chē,写字|xiě zì,演员|yǎn yuán,旅行|lǚ xíng,北京|běi jīng,水平|shuǐ píng,讨论|tǎo lùn,礼貌|lǐ mào,普通|pǔ tōng,每天|měi tiān,海边|hǎi biān,可靠|kě kào,语言|yǔ yán,补充|bǔ chōng,考试|kǎo shì,朗读|lǎng dú`.split(','),
+  neutral: `桌子|zhuō zi,椅子|yǐ zi,妈妈|mā ma,爸爸|bà ba,朋友|péng you,明白|míng bai,漂亮|piào liang,事情|shì qing,地方|dì fang,姑娘|gū niang,东西|dōng xi,喜欢|xǐ huan,知道|zhī dao,孩子|hái zi,衣服|yī fu,休息|xiū xi`.split(','),
+  erhua: `小孩儿|xiǎo háir,门口儿|mén kǒur,一会儿|yí huìr,照片儿|zhào piānr,聊天儿|liáo tiānr,花瓣儿|huā bànr,玩意儿|wán yìr,快板儿|kuài bǎnr,一点儿|yì diǎnr,小曲儿|xiǎo qǔr,没事儿|méi shìr,好玩儿|hǎo wánr,书本儿|shū běnr,打盹儿|dǎ dǔnr`.split(','),
+  regular: `今天|jīn tiān,学习|xué xí,工作|gōng zuò,生活|shēng huó,城市|chéng shì,文化|wén huà,自然|zì rán,安全|ān quán,成功|chéng gōng,健康|jiàn kāng,新闻|xīn wén,时间|shí jiān,家庭|jiā tíng,同学|tóng xué,公园|gōng yuán,电影|diàn yǐng,音乐|yīn yuè,阅读|yuè dú,阳光|yáng guāng,交通|jiāo tōng,空气|kōng qì,认真|rèn zhēn,快乐|kuài lè,特别|tè bié,希望|xī wàng,决定|jué dìng,需要|xū yào,帮助|bāng zhù,容易|róng yì,开始|kāi shǐ,发现|fā xiàn,进步|jìn bù,练习|liàn xí,发音|fā yīn,标准|biāo zhǔn,准确|zhǔn què,声调|shēng diào,韵母|yùn mǔ,声母|shēng mǔ,词语|cí yǔ,连贯|lián guàn,流畅|liú chàng,表达|biǎo dá,内容|nèi róng,准备|zhǔn bèi,进场|jìn chǎng,电脑|diàn nǎo,屏幕|píng mù,话筒|huà tǒng,顺序|shùn xù,速度|sù dù,正确|zhèng què,错误|cuò wù,清晨|qīng chén,黄昏|huáng hūn,世界|shì jiè,未来|wèi lái,传统|chuán tǒng,社会|shè huì,环境|huán jìng,责任|zé rèn,礼物|lǐ wù,运动|yùn dòng,故事|gù shi,艺术|yì shù,幸福|xìng fú,理解|lǐ jiě,努力|nǔ lì,习惯|xí guàn,诚实|chéng shí,沟通|gōu tōng,耐心|nài xīn,尊重|zūn zhòng,热情|rè qíng,安静|ān jìng,方便|fāng biàn,丰富|fēng fù,简单|jiǎn dān`.split(',')
+};
+for(const key in groups) groups[key]=groups[key].map(x=>{const [text,pinyin]=x.split('|');return{text,pinyin,syllables:2,kind:key}});
+
+const $=id=>document.getElementById(id);
+let section=1, items=[], marked=new Set(), listenMode=false, showingPinyin=false;
+let timerId=null, remaining=210, running=false;
+
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pick(a,n){return shuffle(a).slice(0,n)}
+function makePart2(){
+  const chosen=[...pick(groups.thirdThird,3),...pick(groups.thirdOther,4),...pick(groups.neutral,4),...pick(groups.erhua,4)];
+  const used=new Set(chosen.map(x=>x.text));
+  const fillers=shuffle(groups.regular).filter(x=>!used.has(x.text)).slice(0,35);
+  return shuffle([...chosen,...fillers]);
+}
+function newSet(){
+  marked.clear();
+  items=section===1?pick(part1,100):makePart2();
+  resetTimer();render();
+}
+function render(){
+  const grid=$('grid');grid.className='grid'+(showingPinyin?' show-pinyin':'');grid.innerHTML='';
+  items.forEach((item,i)=>{
+    const card=document.createElement('button');card.type='button';card.className='card'+(section===2?' word':'')+(section===2&&item.text.length>=4?' long':'')+(marked.has(i)?' marked':'');
+    card.innerHTML=`<span class="n">${i+1}</span><span class="han">${item.text}</span><span class="py">${item.pinyin}</span>`;
+    card.setAttribute('aria-label',`${i+1}. ${item.text}${showingPinyin?' '+item.pinyin:''}`);
+    card.onclick=()=>listenMode?speak(item,card):toggleMark(i);
+    grid.appendChild(card);
+  });
+  $('markedCount').textContent=`重点 ${marked.size} 项`;
+  $('summary').innerHTML=section===1
+    ? `<b>本套检查：</b><span class="badge">100个单音节</span><span class="badge">无轻声</span><span class="badge">无儿化</span><br>计时结束后再显示拼音，重点检查声母、韵母和四声。`
+    : `<b>本套检查：</b><span class="badge">50个词</span><span class="badge">共100音节</span><span class="badge">上声+上声 ≥3</span><span class="badge">上声+非上声 ≥4</span><span class="badge">轻声 ≥4</span><span class="badge">儿化 ≥4</span><br>先连贯读完整个词，不要把每个字割裂开。`;
+}
+function toggleMark(i){marked.has(i)?marked.delete(i):marked.add(i);render()}
+function speak(item,card){
+  if(!('speechSynthesis' in window)){alert('这部手机暂不支持网页语音。');return}
+  speechSynthesis.cancel();document.querySelectorAll('.speaking').forEach(x=>x.classList.remove('speaking'));card.classList.add('speaking');
+  const u=new SpeechSynthesisUtterance(item.text);u.lang='zh-CN';u.rate=.72;u.pitch=1;u.onend=()=>card.classList.remove('speaking');speechSynthesis.speak(u);
+}
+function setSection(n){
+  section=n;$('tab1').classList.toggle('active',n===1);$('tab2').classList.toggle('active',n===2);
+  $('sectionMeta').innerHTML=n===1?'100个音节<br>满分10分':'100个音节<br>满分20分';
+  showingPinyin=false;$('pinyinBtn').textContent='显示拼音';newSet();
+}
+function formatTime(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
+function paintTimer(){
+  $('timer').textContent=formatTime(remaining);$('timer').classList.toggle('danger',remaining<=30);
+  $('timerState').textContent=running?'朗读中：保持稳定，不回读':remaining===0?'时间到：停止朗读并复盘':'准备好后开始；按横向顺序朗读';
+}
+function startPause(){
+  if(remaining===0)resetTimer();
+  running=!running;$('timerBtn').textContent=running?'暂停计时':'继续计时';
+  if(running){timerId=setInterval(()=>{remaining--;paintTimer();if(remaining<=0){clearInterval(timerId);timerId=null;running=false;$('timerBtn').textContent='重新开始';if(navigator.vibrate)navigator.vibrate([250,120,250]);if('speechSynthesis'in window){const u=new SpeechSynthesisUtterance('时间到');u.lang='zh-CN';speechSynthesis.speak(u)}}},1000)}else{clearInterval(timerId);timerId=null}
+  paintTimer();
+}
+function resetTimer(){
+  clearInterval(timerId);timerId=null;running=false;remaining=section===1?210:150;$('timerBtn').textContent='开始计时';paintTimer();
+}
+
+$('tab1').onclick=()=>setSection(1);$('tab2').onclick=()=>setSection(2);$('newBtn').onclick=newSet;$('clearBtn').onclick=()=>{marked.clear();render()};
+$('timerBtn').onclick=startPause;$('resetBtn').onclick=resetTimer;
+$('pinyinBtn').onclick=()=>{showingPinyin=!showingPinyin;$('pinyinBtn').textContent=showingPinyin?'隐藏拼音':'显示拼音';render()};
+$('listenBtn').onclick=()=>{listenMode=!listenMode;$('listenBtn').classList.toggle('on',listenMode);$('listenBtn').textContent=`听读模式：${listenMode?'开':'关'}`};
+
+// Built-in content checks: fail loudly instead of showing a malformed practice set.
+console.assert(part1.length>=100,'第一项词库不足100项');
+for(const key of Object.keys(groups)) console.assert(groups[key].every(x=>x.syllables===2),`${key}存在非双音节条目`);
+setSection(1);
+</script>
+</body>
+</html>
